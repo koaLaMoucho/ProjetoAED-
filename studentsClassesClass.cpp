@@ -16,6 +16,24 @@ bool studentsClassesClass::strcomp0(string a, string b){
 bool studentsClassesClass::strcomp1(string a, string b) {
     return a > b;
 }
+
+///turmas de um estudante
+void studentsClassesClass::turmaAluno(const vector<studentsClassesClass>& arr, string nome){
+    string sep = ":";
+    vector<string> v;
+    for (const auto& x: arr){
+        if ((x.StudentName == nome) && !(find(v.begin(), v.end(), x.UcCode) != v.end())){
+            v.push_back(x.UcCode);
+        }
+    }
+    cout << "The UCs that has at least one student assigned to it are: ";
+    for (auto x: v){
+        cout << sep << " " << x;
+        sep = ",";
+    }
+    cout << endl;
+}
+
 ///Numero de estudantes numa turma x (Ocuupação da turma)
 int studentsClassesClass::ocupacaoTurma(const string cadeira, string turma, const vector<studentsClassesClass>& arr){
     int acc=0;
@@ -84,10 +102,10 @@ void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const 
                 removerEstudante(nome,cadeira,arr);
                 adicionarEstudante(nome,cadeira,novaTurma,arr);
             }
-            if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) cout << "Não deu para trocares de turma pois causa desequilibrio e a turma também não tinha vagas.";
+            if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) cout << "Não deu para trocares de turma pois causa desequilibrio e a turma também não tinha vagas." << endl;
             else{
-                if (diferencaDeAlunosTurma(cadeira, arr) == 0) cout << "Não deu para trocares de turma pois causa desequilibrio entre turmas.";
-                if (n_alunosTurma >= Cap) cout<< "Não deu para trocares de turma pois a turma não tem vagas.";
+                if (diferencaDeAlunosTurma(cadeira, arr) == 0) cout << "Não deu para trocares de turma pois causa desequilibrio entre turmas." << endl;
+                if (n_alunosTurma >= Cap) cout<< "Não deu para trocares de turma pois a turma não tem vagas." << endl;
             }
 
         }
@@ -112,7 +130,7 @@ void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &
         fila.push(x);
     }
 }
-void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr) {
+void studentsClassesClass::verificarFinalDoDia(vector<studentsClassesClass> &arr) {
     if (fila.empty()) cout << "Não houve pedidos de alteração de horário hoje." << endl;
     else {
         while (!fila.empty()) {
@@ -126,19 +144,15 @@ void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &ar
 
 ///Numero de pessoas a ir a UCs do ano x
 
-void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, int ano){
+void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, char ano){
     vector<string> v;
-    char anoc = '9';
-    if (ano==1) anoc = '1';
-    if (ano==2) anoc = '2';
-    if (ano==3) anoc = '3';
     for (const auto& x: arr){
         if(x.ClassCode.at(0) == ano && !(find(v.begin(), v.end(), x.StudentName) != v.end())){
             v.push_back(x.StudentName);
         }}
     int acc=0;
     for (auto x: v) acc++;
-    cout << "Number of people attending UCs belonging to year " << ano << ": " << acc;
+    cout << "Number of people attending UCs belonging to year " << ano << ": " << acc << endl;
 }
 ///Número de estudantes numa UC x (Ocupação UC)
 
@@ -150,7 +164,7 @@ void studentsClassesClass::ocupacaoUc(const vector<studentsClassesClass>& arr, s
             sum++;
         }
     }
-    cout << "Number of students in UC " << cadeira << ": " << sum;
+    cout << "Number of students in UC " << cadeira << ": " << sum << endl;
 }
 
 ///Estudantes em determinada turma x
@@ -158,52 +172,38 @@ void studentsClassesClass::ocupacaoUc(const vector<studentsClassesClass>& arr, s
 void studentsClassesClass::estudantesTurma(const vector<studentsClassesClass>& arr, string turma){
     string sep = ":";
     vector<string> names;
+    cout << "The students that belong to class " << turma << " are";
     for (const auto& x: arr){
         if (x.ClassCode.compare(turma) == 0){
             names.push_back(x.StudentName);
         }
     }
-    if (names.empty()){
-        cout << "That class doesn't exist, try again" << endl;
-    }
-    else{
-    cout << "The students that belong to class " << turma << " are";
     sort(names.begin(), names.end(), strcomp0);
     for (const auto& n: names){
         cout << sep << " " << n;
         sep = ",";
     }
-    cout << "." << endl;}
+    cout << "." << endl;
 }
 ///Estudantes que têm UCs do ano x
 
-void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>& arr, int ano){
+void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>& arr, char ano){
     string sep = ":";
-    vector<string> vetorUC;
-    char anoc = '9';
-    if (ano==1) anoc = '1';
-    if (ano==2) anoc = '2';
-    if (ano==3) anoc = '3';
+    vector<string> v;
     for (const auto& x: arr){
-        if(x.ClassCode.at(0) == anoc && !(find(vetorUC.begin(), vetorUC.end(), x.StudentName) != vetorUC.end())){
-            vetorUC.push_back(x.StudentName);
+        if x.ClassCode.at(0)== ano && !(find(v.begin(), v.end(), x.StudentName) != v.end())){
+            v.push_back(x.StudentName);
         }
+
     }
-    if (vetorUC.empty()){
-        cout << "No one attending UCs of that year in our database" << endl;
-    }
-    else{
-    sort(vetorUC.begin(), vetorUC.end(), strcomp0);
+    sort(v.begin(), v.end(), strcomp0);
     cout << "The students that are attending UCs belonging to year " << ano << " are";
-    for (auto x : vetorUC){
+    for (auto x : v){
         cout << sep << " " << x;
         sep = ",";
 
     }
     cout << "." << endl;
-    vetorUC.clear();
-    }
-
 
 }
 void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& arr){
@@ -229,26 +229,19 @@ void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& a
 void studentsClassesClass::estudantesUC(const vector<studentsClassesClass>& arr, string cadeira){
     string sep = ":";
     vector<string> v;
+    cout << "The students that are attending UC " << cadeira << " are";
     for (const auto& x: arr){
         if (x.UcCode.compare(cadeira) == 0){
             v.push_back(x.StudentName);
         }
     }
-    if (v.empty()){
-        cout << "That UC doesn't exist or doesn't have any students." << endl;
-    }
-    else{
-        cout << "The students that are attending UC " << cadeira << " are: ";
-
     sort(v.begin(), v.end(), strcomp1);
     for (const auto& n: v){
         cout << sep << " " << n;
         sep = ",";
     }
-
     cout << "." << endl;
-    v.clear();
-}}
+}
 
 ///turmas de cada UC
 void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, string uc){
@@ -271,6 +264,6 @@ void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, str
             cout << sep << " " << n;
             sep = ",";
         }
-        cout << ". " << sum << " classes in total.";
+        cout << ". " << sum << " classes in total." << endl;
     }
 }
