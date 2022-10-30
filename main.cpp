@@ -180,9 +180,9 @@ int main() {
                 cout << "If you want to see which students are in a certain class [PRESS 1]" << endl;
                 cout << "If you want to see all students [PRESS 2]" << endl;
                 cout << "If you want to see all students belonging to a year [PRESS 3]" << endl;
-                cout << "If you want to see all students from an UCs [PRESS 4]" << endl;
+                cout << "If you want to see all students from an UC [PRESS 4]" << endl;
                 cout << "If you want to see the schedule of a student [PRESS 5]" << endl;
-                cout << "If you want to see all students' class [PRESS 6]" << endl;
+                cout << "If you want to see the classes a student attends [PRESS 6]" << endl;
                 cout << "If the day has come to an end - [PRESS f]" << endl;
                 cout << "If you want to go back - [PRESS e]" << endl;
                 cout << "==================================================================" << endl;
@@ -215,17 +215,17 @@ int main() {
                 }
                 else if (stringResposta == "5"){
                     cout << "=========================================" << endl;
-                    cout << "Which students schedule you want to see?" << endl;
+                    cout << "Which students schedule you want to see? || FORMAT:Mafalda" << endl;
                     cout << "=========================================" << endl;
                     cin >> stringResposta;
                     horarioEstudante(ArrStudentsClasses, ArrClasses, stringResposta);
                 }
                 else if (stringResposta == "6"){
                     cout << "========================================" << endl;
-                    cout << "Which students' classes you want to see?" << endl;
+                    cout << "Whose classes do you want to see? || FORMAT:Mafalda" << endl;
                     cout << "========================================" << endl;
                     cin >> stringResposta;
-                    //studentsClassesClass::turmaAluno(ArrStudentsClasses, stringResposta);
+                    studentsClassesClass::turmaAluno(ArrStudentsClasses, stringResposta);
                 }
             }
         }

@@ -28,6 +28,8 @@ public:
     static void removerEstudante(const string nome, const string cadeira, vector<studentsClassesClass>& arr);
     static void alteraçaoVariasTurmas( vector<studentsClassesClass> &arr);
     static void verificarFinalDoDia(vector<studentsClassesClass> &arr);
+
+    static void turmaAluno(const vector<studentsClassesClass> &arr, string nome);
 };
 
 
