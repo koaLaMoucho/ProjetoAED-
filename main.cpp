@@ -58,7 +58,7 @@ void horarioEstudante(const vector<studentsClassesClass>& arr1, const vector<cla
         }
 
     }
-    if (v1.size() + v2.size() + v3.size()+v4.size()+v5.size()==0) cout << "There is no student with the name " << nomeEstudante << ".";
+    if (v1.size() + v2.size() + v3.size()+v4.size()+v5.size()==0) cout << "There is no student with the name " << nomeEstudante << "." << endl;
 
     for (const auto &n: v1) {
         cout << nomeEstudante << " has a " << n.Type << " class for UC " << n.UcCode << " from "
@@ -201,7 +201,7 @@ int main() {
                 }
                 else if (stringResposta == "3"){
                     cout << "===========================" << endl;
-                    cout << "Which year do you want see?" << endl;
+                    cout << "Which year do you want see? || FORMAT: 1" << endl;
                     cout << "===========================" << endl;
                     cin >> intResposta;
                     studentsClassesClass::estudantesEmUcsAno(ArrStudentsClasses, intResposta);
@@ -215,7 +215,7 @@ int main() {
                 }
                 else if (stringResposta == "5"){
                     cout << "=========================================" << endl;
-                    cout << "Which students' schedule you want to see?" << endl;
+                    cout << "Which students schedule you want to see?" << endl;
                     cout << "=========================================" << endl;
                     cin >> stringResposta;
                     horarioEstudante(ArrStudentsClasses, ArrClasses, stringResposta);
@@ -225,7 +225,7 @@ int main() {
                     cout << "Which students' classes you want to see?" << endl;
                     cout << "========================================" << endl;
                     cin >> stringResposta;
-                    studentsClassesClass::turmaAluno(ArrStudentsClasses, stringResposta);
+                    //studentsClassesClass::turmaAluno(ArrStudentsClasses, stringResposta);
                 }
             }
         }
@@ -243,7 +243,7 @@ int main() {
                 if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses);
                 if (stringResposta == "1"){
                     cout << "===================================" << endl;
-                    cout << "From which year do you want to see?" << endl;
+                    cout << "From which year do you want to see? || FORMAT: 1" << endl;
                     cout << "===================================" << endl;
                     cin >> intResposta;
                     studentsClassesClass::ocupacaoUcsAno(ArrStudentsClasses, intResposta);

@@ -126,8 +126,12 @@ void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &ar
 
 ///Numero de pessoas a ir a UCs do ano x
 
-void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, char ano){
+void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, int ano){
     vector<string> v;
+    char anoc = '9';
+    if (ano==1) anoc = '1';
+    if (ano==2) anoc = '2';
+    if (ano==3) anoc = '3';
     for (const auto& x: arr){
         if(x.ClassCode.at(0) == ano && !(find(v.begin(), v.end(), x.StudentName) != v.end())){
             v.push_back(x.StudentName);
@@ -154,38 +158,52 @@ void studentsClassesClass::ocupacaoUc(const vector<studentsClassesClass>& arr, s
 void studentsClassesClass::estudantesTurma(const vector<studentsClassesClass>& arr, string turma){
     string sep = ":";
     vector<string> names;
-    cout << "The students that belong to class " << turma << " are";
     for (const auto& x: arr){
         if (x.ClassCode.compare(turma) == 0){
             names.push_back(x.StudentName);
         }
     }
+    if (names.empty()){
+        cout << "That class doesn't exist, try again" << endl;
+    }
+    else{
+    cout << "The students that belong to class " << turma << " are";
     sort(names.begin(), names.end(), strcomp0);
     for (const auto& n: names){
         cout << sep << " " << n;
         sep = ",";
     }
-    cout << ".";
+    cout << "." << endl;}
 }
 ///Estudantes que têm UCs do ano x
 
-void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>& arr, char ano){
+void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>& arr, int ano){
     string sep = ":";
-    vector<string> v;
+    vector<string> vetorUC;
+    char anoc = '9';
+    if (ano==1) anoc = '1';
+    if (ano==2) anoc = '2';
+    if (ano==3) anoc = '3';
     for (const auto& x: arr){
-        if(x.ClassCode.at(0) == ano && !(find(v.begin(), v.end(), x.StudentName) != v.end())){
-            v.push_back(x.StudentName);
+        if(x.ClassCode.at(0) == anoc && !(find(vetorUC.begin(), vetorUC.end(), x.StudentName) != vetorUC.end())){
+            vetorUC.push_back(x.StudentName);
         }
-
     }
-    sort(v.begin(), v.end(), strcomp0);
+    if (vetorUC.empty()){
+        cout << "No one attending UCs of that year in our database" << endl;
+    }
+    else{
+    sort(vetorUC.begin(), vetorUC.end(), strcomp0);
     cout << "The students that are attending UCs belonging to year " << ano << " are";
-    for (auto x : v){
+    for (auto x : vetorUC){
         cout << sep << " " << x;
         sep = ",";
 
     }
-    cout << ".";
+    cout << "." << endl;
+    vetorUC.clear();
+    }
+
 
 }
 void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& arr){
@@ -211,19 +229,26 @@ void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& a
 void studentsClassesClass::estudantesUC(const vector<studentsClassesClass>& arr, string cadeira){
     string sep = ":";
     vector<string> v;
-    cout << "The students that are attending UC " << cadeira << " are";
     for (const auto& x: arr){
         if (x.UcCode.compare(cadeira) == 0){
             v.push_back(x.StudentName);
         }
     }
+    if (v.empty()){
+        cout << "That UC doesn't exist or doesn't have any students." << endl;
+    }
+    else{
+        cout << "The students that are attending UC " << cadeira << " are: ";
+
     sort(v.begin(), v.end(), strcomp1);
     for (const auto& n: v){
         cout << sep << " " << n;
         sep = ",";
     }
-    cout << ".";
-}
+
+    cout << "." << endl;
+    v.clear();
+}}
 
 ///turmas de cada UC
 void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, string uc){
