@@ -22,4 +22,5 @@ void classesPerUcClass::todasUcs(const vector<classesPerUcClass>& arr){
         sep = ",";
 
     }
+    cout << "." << endl;
 }
