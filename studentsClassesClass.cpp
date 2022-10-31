@@ -6,8 +6,6 @@
 #include <queue>
 #include <set>
 #include "studentsClassesClass.h"
-#include "classesClass.h"
-
 using namespace std;
 
 ///funcao para comparar strings
@@ -18,151 +16,6 @@ bool studentsClassesClass::strcomp0(string a, string b){
 bool studentsClassesClass::strcomp1(string a, string b) {
     return a > b;
 }
-
-///Horário de determinado estudante
-
-void studentsClassesClass::horarioEstudante(const vector<studentsClassesClass>& arr1, const vector<classesClass>& arr2, string nomeEstudante) {
-    string turmaAtual;
-    string cadeiraAtual;
-    vector<classesClass> v1;
-    vector<classesClass> v2;
-    vector<classesClass> v3;
-    vector<classesClass> v4;
-    vector<classesClass> v5;
-    for (auto x: arr1) {
-        if (x.StudentName.compare(nomeEstudante) == 0) {
-            turmaAtual = x.ClassCode;
-            cadeiraAtual = x.UcCode;
-            for (auto y: arr2) {
-                int n1 = y.ClassCode.compare(turmaAtual);
-                int n2 = y.UcCode.compare(cadeiraAtual);
-                if (n1 == 0 && n2 == 0) {
-                    if (y.Weekday.compare("Monday") == 0) {
-                        v1.push_back(y);
-                        sort(v1.begin(), v1.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Tuesday") == 0) {
-                        v2.push_back(y);
-                        sort(v2.begin(), v2.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Wednesday") == 0) {
-                        v3.push_back(y);
-                        sort(v3.begin(), v3.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Thursday") == 0) {
-                        v4.push_back(y);
-                        sort(v4.begin(), v4.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Friday") == 0) {
-                        v5.push_back(y);
-                        sort(v5.begin(), v5.end(), classesClass::intcomp);
-                    }
-
-                }
-
-            }
-        }
-
-    }
-    if (v1.size() + v2.size() + v3.size()+v4.size()+v5.size()==0) cout << "There is no student with the name " << nomeEstudante << "." << endl;
-
-    for (const auto &n: v1) {
-        cout << nomeEstudante << " has a " << n.Type << " class for UC " << n.UcCode << " from "
-             << n.StartHour << " to " << n.StartHour + n.Duration << " on " << n.Weekday << endl;
-    }
-    for (const auto &n: v2) {
-        cout << nomeEstudante << " has a " << n.Type << " class for UC " << n.UcCode << " from "
-             << n.StartHour << " to " << n.StartHour + n.Duration << " on " << n.Weekday << endl;
-    }
-    for (const auto &n: v3) {
-        cout << nomeEstudante << " has a " << n.Type << " class for UC " << n.UcCode << " from "
-             << n.StartHour << " to " << n.StartHour + n.Duration << " on " << n.Weekday << endl;
-    }
-    for (const auto &n: v4) {
-        cout << nomeEstudante << " has a " << n.Type << " class for UC " << n.UcCode << " from "
-             << n.StartHour << " to " << n.StartHour + n.Duration << " on " << n.Weekday << endl;
-    }
-    for (const auto &n: v5) {
-        cout << nomeEstudante << " has a " << n.Type << " class for UC " << n.UcCode << " from "
-             << n.StartHour << " to " << n.StartHour + n.Duration << " on " << n.Weekday << endl;
-    }
-}
-
-///Verifica a sobreposição de horário de determinado estudante
-
-bool studentsClassesClass::verificaSobreposicao(const vector<studentsClassesClass>& arr1, const vector<classesClass>& arr2, string nomeEstudante){
-    vector<classesClass> v1;
-    vector<classesClass> v2;
-    vector<classesClass> v3;
-    vector<classesClass> v4;
-    vector<classesClass> v5;
-    string turmaAtual;
-    string cadeiraAtual;
-
-    for (auto x: arr1) {
-        if (x.StudentName.compare(nomeEstudante) == 0) {
-            turmaAtual = x.ClassCode;
-            cadeiraAtual = x.UcCode;
-            for (auto y: arr2) {
-                int n1 = y.ClassCode.compare(turmaAtual);
-                int n2 = y.UcCode.compare(cadeiraAtual);
-                if (n1 == 0 && n2 == 0) {
-                    if (y.Weekday.compare("Monday") == 0) {
-                        v1.push_back(y);
-                        sort(v1.begin(), v1.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Tuesday") == 0) {
-                        v2.push_back(y);
-                        sort(v2.begin(), v2.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Wednesday") == 0) {
-                        v3.push_back(y);
-                        sort(v3.begin(), v3.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Thursday") == 0) {
-                        v4.push_back(y);
-                        sort(v4.begin(), v4.end(), classesClass::intcomp);
-                    }
-                    if (y.Weekday.compare("Friday") == 0) {
-                        v5.push_back(y);
-                        sort(v5.begin(), v5.end(), classesClass::intcomp);
-                    }
-
-                }
-
-            }
-        }
-
-    }
-
-    int i = 0;
-    while(i+1 != v1.size()){
-        if ( v1[i].Type == "TP" &&  v1[i+1].Type == "TP" && (v1[i].StartHour + v1[i].Duration) > v1[i+1].StartHour ) return false; // tem sobreposição
-        else return true; //não tem sobreposição
-    }
-    i = 0;
-    while(i+1 != v2.size()){
-        if ( v2[i].Type == "TP" &&  v2[i+1].Type == "TP" && (v2[i].StartHour + v2[i].Duration) > v2[i+1].StartHour ) return false;
-        else return true;
-    }
-    i = 0;
-    while(i+1 != v3.size()){
-        if ( v3[i].Type == "TP" &&  v3[i+1].Type == "TP" && (v3[i].StartHour + v3[i].Duration) > v3[i+1].StartHour ) return false;
-        else return true;
-    }
-    i = 0;
-    while(i+1 != v4.size()){
-        if ( v4[i].Type == "TP" &&  v4[i+1].Type == "TP" && (v4[i].StartHour + v4[i].Duration) > v4[i+1].StartHour ) return false;
-        else return true;
-    }
-    i = 0;
-    while(i+1 != v5.size()){
-        if ( v5[i].Type == "TP" &&  v5[i+1].Type == "TP" && (v5[i].StartHour + v5[i].Duration) > v5[i+1].StartHour ) return false;
-        else return true;
-    }
-    return false; //se não entrar em algum while verificar.
-}
-
 ///Numero de estudantes numa turma x (Ocuupação da turma)
 int studentsClassesClass::ocupacaoTurma(const string cadeira, string turma, const vector<studentsClassesClass>& arr){
     int acc=0;
@@ -222,17 +75,16 @@ bool studentsClassesClass::diferencaDeAlunosTurma(const string cadeira, const ve
     return false;
 }
 
-void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const std::string cadeira,const std::string novaTurma,vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
+void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const std::string cadeira,const std::string novaTurma,vector<studentsClassesClass> &arr) {
     int Cap = 50;
     int n_alunosTurma = ocupacaoTurma(cadeira, novaTurma, arr);
     for (const auto& x : arr){
-        if (x.StudentName == nome && x.UcCode == cadeira && verificaSobreposicao(arr,arr2,nome)) {
+        if (x.StudentName == nome && x.UcCode == cadeira) {
             if (n_alunosTurma < Cap && diferencaDeAlunosTurma(cadeira, arr)) {
                 removerEstudante(nome,cadeira,arr);
                 adicionarEstudante(nome,cadeira,novaTurma,arr);
             }
-            if (!verificaSobreposicao(arr,arr2,nome)) cout << "Não deu para trocares por causa da sobreposição de aulas.";
-            else if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) cout << "Não deu para trocares de turma pois causa desequilibrio e a turma também não tinha vagas.";
+            if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) cout << "Não deu para trocares de turma pois causa desequilibrio e a turma também não tinha vagas.";
             else{
                 if (diferencaDeAlunosTurma(cadeira, arr) == 0) cout << "Não deu para trocares de turma pois causa desequilibrio entre turmas.";
                 if (n_alunosTurma >= Cap) cout<< "Não deu para trocares de turma pois a turma não tem vagas.";
@@ -260,11 +112,11 @@ void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &
         fila.push(x);
     }
 }
-void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
+void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr) {
     if (fila.empty()) cout << "Não houve pedidos de alteração de horário hoje." << endl;
     else {
         while (!fila.empty()) {
-            pedidoAlteracaoHorario(fila.front().StudentName, fila.front().UcCode, fila.front().ClassCode, arr, arr2);
+            pedidoAlteracaoHorario(fila.front().StudentName, fila.front().UcCode, fila.front().ClassCode, arr);
             fila.pop();
         }
     }
@@ -438,5 +290,3 @@ void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, str
         cout << ". " << sum << " classes in total.";
     }
 }
-
-
