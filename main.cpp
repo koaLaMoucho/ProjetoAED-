@@ -58,7 +58,7 @@ int main() {
 
     myFile.open("../classes.csv");
     getline(myFile, CurrentLine);
-    string tempClassString; // string criada para poder copiar ints como classes.StartHour e classe.Duration para uma string
+    string tempClassString;
 
     while (getline(myFile, CurrentLine)) {
         stringstream inputString(CurrentLine);
@@ -121,7 +121,7 @@ int main() {
 
     string stringResposta;
     int intResposta;
-    while (stringResposta != "q") {
+    while (stringResposta != "q"){
         cout << "========================= What action do you wish to do? =========================" << endl;
         cout << "Actions related to students (Students in UCs, Classes,...) - [PRESS 1]" << endl;
         cout << "Actions related to UCs (Occupation of UC,Classes Per UC, All UCs,...) - [PRESS 2]" << endl;
@@ -131,14 +131,14 @@ int main() {
         cout << "If you want to exit the menu - [PRESS q]" << endl;
         cout << "==================================================================================" << endl;
         cin >> stringResposta;
-        if (stringResposta == "q") {
-            DarOutput(ArrClasses, ArrStudentsClasses, ArrClassesPerUc);
+        if(stringResposta=="q"){
+            DarOutput(ArrClasses,ArrStudentsClasses,ArrClassesPerUc);
             break;
         }
         if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses, ArrClasses);
-        else if (stringResposta == "1") {
-            while (stringResposta != "e") {
-                intResposta = 0;
+        else if (stringResposta == "1"){
+            while (stringResposta != "e"){
+                intResposta=0;
                 cout << "================= What action do you wish to do? =================" << endl;
                 cout << "If you want to see which students are in a certain class [PRESS 1]" << endl;
                 cout << "If you want to see all students [PRESS 2]" << endl;
@@ -151,35 +151,39 @@ int main() {
                 cout << "==================================================================" << endl;
                 cin >> stringResposta;
                 if (stringResposta == "e") break;
-                else if (stringResposta == "f")
-                    studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses, ArrClasses);
-                else if (stringResposta == "1") {
+                else if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses, ArrClasses);
+                else if (stringResposta == "1"){
                     cout << "==============================================" << endl;
                     cout << "Which class do you want see? || FORMAT:1LEIC01" << endl;
                     cout << "==============================================" << endl;
                     cin >> stringResposta;
                     studentsClassesClass::estudantesTurma(ArrStudentsClasses, stringResposta);
-                } else if (stringResposta == "2") {
+                }
+                else if (stringResposta == "2"){
                     studentsClassesClass::todosEstudantes(ArrStudentsClasses);
-                } else if (stringResposta == "3") {
+                }
+                else if (stringResposta == "3"){
                     cout << "===========================" << endl;
                     cout << "Which year do you want see? || FORMAT: 1" << endl;
                     cout << "===========================" << endl;
                     cin >> intResposta;
                     studentsClassesClass::estudantesEmUcsAno(ArrStudentsClasses, intResposta);
-                } else if (stringResposta == "4") {
+                }
+                else if (stringResposta == "4"){
                     cout << "============================================" << endl;
                     cout << "Which UC do you want see? || FORMAT:L.EIC001" << endl;
                     cout << "============================================" << endl;
                     cin >> stringResposta;
                     studentsClassesClass::estudantesUC(ArrStudentsClasses, stringResposta);
-                } else if (stringResposta == "5") {
+                }
+                else if (stringResposta == "5"){
                     cout << "=========================================" << endl;
                     cout << "Which students schedule you want to see? || FORMAT:Mafalda" << endl;
                     cout << "=========================================" << endl;
                     cin >> stringResposta;
                     studentsClassesClass::horarioEstudante(ArrStudentsClasses, ArrClasses, stringResposta);
-                } else if (stringResposta == "6") {
+                }
+                else if (stringResposta == "6"){
                     cout << "========================================" << endl;
                     cout << "Whose classes do you want to see? || FORMAT:Mafalda" << endl;
                     cout << "========================================" << endl;
@@ -187,8 +191,9 @@ int main() {
                     studentsClassesClass::turmaAluno(ArrStudentsClasses, stringResposta);
                 }
             }
-        } else if (stringResposta == "2") {
-            while (stringResposta != "e") {
+        }
+        else if (stringResposta == "2"){
+            while (stringResposta != "e"){
                 cout << "===================== What action do you wish to do? =====================" << endl;
                 cout << "If you want to see which students are in UCs from a certain year [PRESS 1]" << endl;
                 cout << "If you want to see all UCs [PRESS 2]" << endl;
@@ -198,18 +203,18 @@ int main() {
                 cout << "==========================================================================" << endl;
                 cin >> stringResposta;
                 if (stringResposta == "q") break;
-                if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses, ArrClasses);
-                if (stringResposta == "1") {
+                if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses,ArrClasses);
+                if (stringResposta == "1"){
                     cout << "===================================" << endl;
                     cout << "From which year do you want to see? || FORMAT: 1" << endl;
                     cout << "===================================" << endl;
                     cin >> intResposta;
                     studentsClassesClass::ocupacaoUcsAno(ArrStudentsClasses, intResposta);
                 }
-                if (stringResposta == "2") {
+                if (stringResposta == "2"){
                     classesPerUcClass::todasUcs(ArrClassesPerUc);
                 }
-                if (stringResposta == "3") {
+                if (stringResposta == "3"){
                     cout << "====================================================" << endl;
                     cout << "Which UC do you want to choose? || FORMAT:L.EIC001" << endl;
                     cout << "====================================================" << endl;
@@ -217,43 +222,33 @@ int main() {
                     studentsClassesClass::ocupacaoUc(ArrStudentsClasses, stringResposta);
                 }
             }
-        } else if (stringResposta == "3") {
-            while (stringResposta != "e") {
-                cout << "================= What action do you wish to do? =================" << endl;
-                cout << "See which classes are in an UC [PRESS 1]" << endl;
-                cout << "See how many people are in a class [PRESS 2]" << endl;
+        }
+        else if (stringResposta == "3"){
+            while (stringResposta != "e"){
+            cout << "================= What action do you wish to do? =================" << endl;
+            cout << "See which classes are in an UC [PRESS 1]" << endl;
+            cout << "See how many people are in a class [PRESS 2]" << endl;
                 cout << "If you want to go back - [PRESS e]" << endl;
-                cout << "==================================================================" << endl;
+            cout << "==================================================================" << endl;
+            cin >> stringResposta;
+            if (stringResposta=="1"){
+                cout << "Which UC do you want to choose? || FORMAT:L.EIC001" << endl;
                 cin >> stringResposta;
-                if (stringResposta == "1") {
-                    cout << "Which UC do you want to choose? || FORMAT:L.EIC001" << endl;
-                    cin >> stringResposta;
-                    studentsClassesClass::turmasUC(ArrStudentsClasses, stringResposta);
-                }
-                string stringResposta2;
-                if (stringResposta == "2") {
-                    cout << "Which UC do you want to choose? || FORMAT:L.EIC001" << endl;
-                    cin >> stringResposta;
-                    cout << "Which class do you want to choose? || FORMAT:1LEIC01" << endl;
-                    cin >> stringResposta2;
-
-                    studentsClassesClass::ocupacaoTurmaCout(stringResposta, stringResposta2, ArrStudentsClasses);
-                }
-
+                studentsClassesClass::turmasUC(ArrStudentsClasses, stringResposta);
             }
-        } else if (stringResposta == "4") {
-            while (stringResposta != "e") {
-                cout << "================= What action do you wish to do? =================" << endl;
-                cout << "If you want to remove a student from a class [PRESS 1]" << endl;
-                cout << "If you want to add a student to a class [PRESS 2]" << endl;
-                cout << "If you want to go back - [PRESS e]" << endl;
-                cout << "==================================================================" << endl;
+            string stringResposta2;
+            if (stringResposta == "2"){
+                cout << "Which UC do you want to choose? || FORMAT:L.EIC001" << endl;
                 cin >> stringResposta;
-                if (stringResposta == "2") {
-                    studentsClassesClass::alteraçaoVariasTurmas(ArrStudentsClasses);
-                }
+                cout << "Which class do you want to choose? || FORMAT:1LEIC01" << endl;
+                cin >> stringResposta2;
 
+                studentsClassesClass::ocupacaoTurmaCout(stringResposta, stringResposta2, ArrStudentsClasses);
             }
+
+        }}
+        else if (stringResposta == "4"){
+            studentsClassesClass::alteraçaoVariasTurmas(ArrStudentsClasses);
         }
     }
 }

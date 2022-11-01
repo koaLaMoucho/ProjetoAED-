@@ -194,23 +194,14 @@ int studentsClassesClass::ocupacaoTurma(const string cadeira, string turma, cons
 
 void studentsClassesClass::removerEstudante(const string nome, const string cadeira, vector<studentsClassesClass>& arr){
     int i=0;
-    string turma;
-    int flag = 0;
     for (const auto& x: arr){
         if (x.StudentName == nome && x.UcCode == cadeira){
-            turma = x.ClassCode;
             arr[i].ClassCode = "NoClass";
             i++;
-            flag = 1;
         }
         i++;
     }
-    if (flag == 0) {
-        cout << nome << "is not in that UC so He / She can't change classes." << endl;
-        return;
-    }
-    cout << nome << " no longer has a class in " <<  cadeira <<  endl;
-
+    cout << "The student has been removed from current class." << endl;
 }
 
 void studentsClassesClass::adicionarEstudante(const string nome, const string cadeira, const string turma, vector<studentsClassesClass>& arr){
@@ -218,10 +209,11 @@ void studentsClassesClass::adicionarEstudante(const string nome, const string ca
     for (const auto& x: arr){
         if (x.StudentName == nome && x.ClassCode == "NoClass" && x.UcCode == cadeira){
             arr[i].ClassCode = turma;
+            i++;
         }
         i++;
     }
-    cout << nome << " has been added to new class " << turma << " for UC " << cadeira << endl;
+    cout << "The student has been added to new class " << turma << " for UC " << cadeira << endl;
 }
 
 bool studentsClassesClass::diferencaDeAlunosTurma(const string cadeira, const vector<studentsClassesClass>& arr){
@@ -246,37 +238,21 @@ bool studentsClassesClass::diferencaDeAlunosTurma(const string cadeira, const ve
 void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const std::string cadeira,const std::string novaTurma,vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
     int Cap = 50;
     int n_alunosTurma = ocupacaoTurma(cadeira, novaTurma, arr);
-
-
-    if (!verificaSobreposicao(arr,arr2,nome)){
-        cout << "You couldn't change your schedule because you would have 2 TP's at the same time.";
-        return;
-    }
-
-    if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) {
-        cout << "You couldn't change classes because diferencaDeAlunosTurma was too great and n_alunosTurma >= Cap.";
-        return;
-    }
-    if (n_alunosTurma >= Cap) {
-        cout << "You couldn't change classes because n_alunosTurma >= Cap.";
-        return;
-    }
-    if (diferencaDeAlunosTurma(cadeira, arr) == 0){
-        cout << "You couldn't change classes because diferencaDeAlunosTurma was too great.";
-        return;
-    }
-
-
-
     for (const auto& x : arr){
         if (x.StudentName == nome && x.UcCode == cadeira && verificaSobreposicao(arr,arr2,nome)) {
-            removerEstudante(nome,cadeira,arr);
-            adicionarEstudante(nome,cadeira,novaTurma,arr);
-            return;
+            if (n_alunosTurma < Cap && diferencaDeAlunosTurma(cadeira, arr)) {
+                removerEstudante(nome,cadeira,arr);
+                adicionarEstudante(nome,cadeira,novaTurma,arr);
+            }
+            if (!verificaSobreposicao(arr,arr2,nome)) cout << "Não deu para trocares por causa da sobreposição de aulas.";
+            else if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) cout << "Não deu para trocares de turma pois causa desequilibrio e a turma também não tinha vagas.";
+            else{
+                if (diferencaDeAlunosTurma(cadeira, arr) == 0) cout << "Não deu para trocares de turma pois causa desequilibrio entre turmas.";
+                if (n_alunosTurma >= Cap) cout<< "Não deu para trocares de turma pois a turma não tem vagas.";
+            }
+
         }
     }
-    cout << nome << "is not in that UC so He / She can't change classes or that student doesn't exist." << endl;
-
 }
 
 queue<studentsClassesClass> fila;
@@ -284,21 +260,21 @@ queue<studentsClassesClass> fila;
 void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &arr){
     studentsClassesClass x;
     bool flag = 1;
-    cout << "What is the name of the student? || FORMAT: Mafalda" << endl;
+    cout << "Qual é o teu nome?" << endl;
     cin >> x.StudentName;
     while(flag) {
-        cout << "What is the UC? || FORMAT: L.EIC001" << endl;
+        cout << "Qual é a UC?" << endl;
         cin >> x.UcCode;
-        cout << "What is the new class? || FORMAT:1LEIC01" << endl;
+        cout << "E qual é a nova turma?" << endl;
         cin >> x.ClassCode;
-        cout << "Your order has been added to the queue ";
-        cout << "Do you want to change any other class? Write '1' for 'Yes' or '0' for 'No'. " << endl;
+        cout << "O teu pedido foi adicionado a fila";
+        cout << "Queres mudar mais alguma? Carrega '1' para 'Sim' ou '0' para não" << endl;
         cin >> flag;
         fila.push(x);
     }
 }
 void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
-    if (fila.empty()) cout << "There were schedule change requests today." << endl;
+    if (fila.empty()) cout << "Não houve pedidos de alteração de horário hoje." << endl;
     else {
         while (!fila.empty()) {
             pedidoAlteracaoHorario(fila.front().StudentName, fila.front().UcCode, fila.front().ClassCode, arr, arr2);
