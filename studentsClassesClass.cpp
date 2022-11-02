@@ -250,31 +250,31 @@ void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const 
                 if (diferencaDeAlunosTurma(cadeira, arr) == 0) cout << "Não deu para trocares de turma pois causa desequilibrio entre turmas.";
                 if (n_alunosTurma >= Cap) cout<< "Não deu para trocares de turma pois a turma não tem vagas.";
             }
-
         }
     }
 }
+
 
 queue<studentsClassesClass> fila;
 
 void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &arr){
     studentsClassesClass x;
     bool flag = 1;
-    cout << "Qual é o teu nome?" << endl;
+    cout << "What is the name of the student? || FORMAT: Mafalda" << endl;
     cin >> x.StudentName;
     while(flag) {
-        cout << "Qual é a UC?" << endl;
+        cout << "What is the UC? || FORMAT: L.EIC001" << endl;
         cin >> x.UcCode;
-        cout << "E qual é a nova turma?" << endl;
+        cout << "What is the new class? || FORMAT:1LEIC01" << endl;
         cin >> x.ClassCode;
-        cout << "O teu pedido foi adicionado a fila";
-        cout << "Queres mudar mais alguma? Carrega '1' para 'Sim' ou '0' para não" << endl;
+        cout << "Your order has been added to the queue ";
+        cout << "Do you want to change any other class? Write '1' for 'Yes' or '0' for 'No'. " << endl;
         cin >> flag;
         fila.push(x);
     }
 }
 void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
-    if (fila.empty()) cout << "Não houve pedidos de alteração de horário hoje." << endl;
+    if (fila.empty()) cout << "There were schedule change requests today." << endl;
     else {
         while (!fila.empty()) {
             pedidoAlteracaoHorario(fila.front().StudentName, fila.front().UcCode, fila.front().ClassCode, arr, arr2);
@@ -282,10 +282,6 @@ void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &ar
         }
     }
 }
-
-
-
-///Numero de pessoas a ir a UCs do ano x
 
 void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, int ano){
     vector<string> v;
@@ -328,16 +324,14 @@ void studentsClassesClass::estudantesTurma(const vector<studentsClassesClass>& a
         cout << "That class doesn't exist, try again" << endl;
     }
     else{
-    cout << "The students that belong to class " << turma << "in at least one UC are";
-    sort(names.begin(), names.end(), strcomp0);
-    for (const auto& n: names){
-        cout << sep << " " << n;
-        sep = ",";
-    }
-    cout << "." << endl;}
+        cout << "The students that belong to class " << turma << "in at least one UC are";
+        sort(names.begin(), names.end(), strcomp0);
+        for (const auto& n: names){
+            cout << sep << " " << n;
+            sep = ",";
+        }
+        cout << "." << endl;}
 }
-///Estudantes que têm UCs do ano x
-
 void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>& arr, int ano){
     string sep = ":";
     vector<string> vetorUC;
@@ -354,19 +348,20 @@ void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>
         cout << "No one attending UCs of that year in our database" << endl;
     }
     else{
-    sort(vetorUC.begin(), vetorUC.end(), strcomp0);
-    cout << "The students attending UCs belonging to year " << ano << " are";
-    for (auto x : vetorUC){
-        cout << sep << " " << x;
-        sep = ",";
+        sort(vetorUC.begin(), vetorUC.end(), strcomp0);
+        cout << "The students attending UCs belonging to year " << ano << " are";
+        for (auto x : vetorUC){
+            cout << sep << " " << x;
+            sep = ",";
 
-    }
-    cout << "." << endl;
-    vetorUC.clear();
+        }
+        cout << "." << endl;
+        vetorUC.clear();
     }
 
 
 }
+
 void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& arr){
     string sep = ":";
     set<string> v;
@@ -384,8 +379,6 @@ void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& a
     cout << endl;
 }
 
-
-
 ///Estudantes em determinada UC x
 void studentsClassesClass::estudantesUC(const vector<studentsClassesClass>& arr, string cadeira){
     string sep = ":";
@@ -401,16 +394,18 @@ void studentsClassesClass::estudantesUC(const vector<studentsClassesClass>& arr,
     else{
         cout << "The students that are attending UC " << cadeira << " are: ";
 
-    sort(v.begin(), v.end(), strcomp0);
-    for (const auto& n: v){
-        cout << sep << " " << n;
-        sep = ",";
+        sort(v.begin(), v.end(), strcomp0);
+        for (const auto& n: v){
+            cout << sep << " " << n;
+            sep = ",";
+        }
+
+        cout << "." << endl;
+        v.clear();
     }
+}
 
-    cout << "." << endl;
-    v.clear();
-}}
-
+///turmas de um estudante; complexidade n
 void studentsClassesClass::turmaAluno(const vector<studentsClassesClass>& arr, string nome){
     string sep = ":";
     vector<string> v;
@@ -419,7 +414,7 @@ void studentsClassesClass::turmaAluno(const vector<studentsClassesClass>& arr, s
             v.push_back(x.ClassCode);
         }
     }
-    cout << "The classes of student " << nome << " are: ";
+    cout << "The UCs that has at least one student assigned to it are: ";
     for (auto x: v){
         cout << sep << " " << x;
         sep = ",";
@@ -451,5 +446,60 @@ void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, str
         cout << ". " << sum << " classes in total." << endl;
     }
 }
+
+
+
+///Ucs de um estudante; complexidade
+set<string> studentsClassesClass::UcsAluno(const vector<studentsClassesClass>& arr, string nome){
+    string sep = ":";
+    set<string> v;
+    for (const auto& x: arr){
+        if ((x.StudentName == nome) && !(find(v.begin(), v.end(), x.UcCode) != v.end())){
+            v.insert(x.UcCode);
+        }
+    }
+    return v;
+}
+///complexidade n
+void studentsClassesClass::printUcsAluno(const vector<studentsClassesClass>& arr, string nome){
+    string sep = ":";
+    cout << "The UCs that the student " << nome <<  " is assigned to are " ;
+    if (studentsClassesClass::UcsAluno(arr, nome).size() == 0){
+        cout << "none";
+    }
+    for (auto x: studentsClassesClass::UcsAluno(arr, nome)){
+        cout << sep << " " << x;
+        sep = ",";
+    }
+    cout << endl;
+}
+///complexidade n
+void studentsClassesClass::estudantesNUcsAlfabeto(vector<studentsClassesClass> &arr, int n){
+    string sep = ":";
+    set<string> v;
+    for (const auto& x: arr){
+        if (studentsClassesClass::UcsAluno(arr, x.StudentName).size() > n){
+            v.insert(x.StudentName);
+        }
+    }
+
+    cout << "The students that have at least more than " << n << " Ucs are ";
+    for (auto x: v){
+        cout << sep << " " << x;
+        sep = ",";
+    }
+    if (v.size() == 0){
+        cout << "none";
+    }
+    cout << endl;
+}
+
+
+
+
+
+
+
+
 
 
