@@ -225,16 +225,16 @@ void studentsClassesClass::adicionarEstudante(const string nome, const string ca
 }
 
 bool studentsClassesClass::diferencaDeAlunosTurma(const string cadeira, const vector<studentsClassesClass>& arr){
-    vector<string> v;
+    set<string> v;
     int maior = INT_MIN;
     int menor = INT_MAX;
 
     for (const auto& x: arr){
-        if (x.UcCode.compare(cadeira) == 0 && !(find(v.begin(), v.end(), x.ClassCode) != v.end()) ){
-            v.push_back(x.ClassCode);
+        if (x.UcCode.compare(cadeira) == 0 ){
+            v.insert(x.ClassCode);
         }
     }
-    sort(v.begin(), v.end(), strcomp0);
+
     for (const auto& y: v) {
         if (ocupacaoTurma(cadeira, y, arr) > maior) maior = ocupacaoTurma(cadeira, y, arr);
         if (ocupacaoTurma(cadeira, y, arr) < menor) menor = ocupacaoTurma(cadeira, y, arr);
@@ -448,14 +448,13 @@ void studentsClassesClass::turmaAluno(const vector<studentsClassesClass>& arr, s
 void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, string uc){
     string sep = ":";
     int sum = 0;
-    vector<string> v;
+    set<string> v;
     for (const auto& x: arr){
-        if (x.UcCode.compare(uc) == 0 && !(find(v.begin(), v.end(), x.ClassCode) != v.end()) ){
-            v.push_back(x.ClassCode);
+        if (x.UcCode.compare(uc) == 0 ){
+            v.insert(x.ClassCode);
             sum++;
         }
     }
-    sort(v.begin(), v.end(), strcomp0);
     if (sum == 0){
         cout << "There is no Uc with that code." << endl;
     }
