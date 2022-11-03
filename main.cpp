@@ -132,6 +132,10 @@ int main() {
         cout << "If you want to exit the menu - [PRESS q]" << endl;
         cout << "==================================================================================" << endl;
         cin >> stringResposta;
+        if(stringResposta=="q"){
+            DarOutput(ArrClasses,ArrStudentsClasses,ArrClassesPerUc);
+            break;
+        }
         if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses, ArrClasses);
         else if (stringResposta == "1"){
             while (stringResposta != "e"){
@@ -208,14 +212,14 @@ int main() {
         else if (stringResposta == "2"){
             while (stringResposta != "e"){
                 cout << "===================== What action do you wish to do? =====================" << endl;
-                cout << "If you want to see which students are in UCs from a certain year [PRESS 1]" << endl;
+                cout << "If you want to see the number of students are in UCs from a certain year [PRESS 1]" << endl;
                 cout << "If you want to see all UCs [PRESS 2]" << endl;
                 cout << "If you want to see all students belonging to an UC [PRESS 3]" << endl;
                 cout << "If the day has come to an end - [PRESS f]" << endl;
                 cout << "If you want to go back - [PRESS e]" << endl;
                 cout << "==========================================================================" << endl;
                 cin >> stringResposta;
-                if (stringResposta == "q") break;
+                if (stringResposta == "e") break;
                 if (stringResposta == "f") studentsClassesClass::verificarFinalDoDia(ArrStudentsClasses, ArrClasses);
                 if (stringResposta == "1"){
                     cout << "================================================" << endl;

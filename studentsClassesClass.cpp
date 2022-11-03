@@ -308,14 +308,14 @@ void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &ar
 }
 
 void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, int ano){
-    vector<string> v;
+    set<string> v;
     char anoc = '9';
     if (ano==1) anoc = '1';
     if (ano==2) anoc = '2';
     if (ano==3) anoc = '3';
     for (const auto& x: arr){
-        if(x.ClassCode.at(0) == anoc && !(find(v.begin(), v.end(), x.StudentName) != v.end())){
-            v.push_back(x.StudentName);
+        if(x.ClassCode.at(0) == anoc ){
+            v.insert(x.StudentName);
         }}
     int acc=0;
     for (auto x: v) acc++;
