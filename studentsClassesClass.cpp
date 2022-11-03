@@ -10,17 +10,10 @@
 
 using namespace std;
 
-///funcao para comparar strings
-bool studentsClassesClass::strcomp0(string a, string b){
-    return a<b;
-}
-///funcao para comparar ints
-bool studentsClassesClass::strcomp1(string a, string b) {
-    return a > b;
-}
-
-///Horário de determinado estudante
-
+///Horário de determinado estudante. Complexidade n (comprimento do vetor arr1) + m (comprimento do vetor arr2).
+///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param arr2 - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
+///@return - sem return, apenas dá cout ao horário do estudante.
 void studentsClassesClass::horarioEstudante(const vector<studentsClassesClass>& arr1, const vector<classesClass>& arr2, string nomeEstudante) {
     string turmaAtual;
     string cadeiraAtual;
@@ -88,8 +81,10 @@ void studentsClassesClass::horarioEstudante(const vector<studentsClassesClass>& 
     }
 }
 
-///Verifica a sobreposição de horário de determinado estudante
-
+///Função booleana auxiliar usada no pedido de alteração horário que verifica a sobreposição de horário de determinado estudante. Complexidade n (comprimento do vetor arr1) + m (comprimento do vetor arr2).
+///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param arr2 - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
+///@return - falso se não houver sobreposição no horário original, verdadeiro se houver
 bool studentsClassesClass::verificaSobreposicao(const vector<studentsClassesClass>& arr1, const vector<classesClass>& arr2, string nomeEstudante){
     vector<classesClass> v1;
     vector<classesClass> v2;
@@ -163,6 +158,11 @@ bool studentsClassesClass::verificaSobreposicao(const vector<studentsClassesClas
     return false; //se não entrar em algum while verificar.
 }
 
+///Número de estudantes numa turma x (Ocuupação da turma). Complexidade O(n).
+///@param cadeira - string que contém a Uc que queremos abordar.
+///@param turma - string que contém a turma que queremos abordar.
+///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - sem return, apenas cout ao número de pessoas de uma turma.
 void studentsClassesClass::ocupacaoTurmaCout(const string cadeira, string turma, const vector<studentsClassesClass>& arr){
     int acc=0;
     for (const auto& x:arr){
@@ -176,7 +176,11 @@ void studentsClassesClass::ocupacaoTurmaCout(const string cadeira, string turma,
     cout << "Number of people in class " << turma << " for UC " << cadeira << ": " << acc << endl;
 }
 
-///Numero de estudantes numa turma x (Ocuupação da turma)
+///Número de estudantes numa turma x (Ocuupação da turma). Complexidade O(n).
+///@param cadeira - string que contém a Uc que queremos abordar.
+///@param turma - string que contém a turma que queremos abordar.
+///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - número de estudantes de uma turma.
 int studentsClassesClass::ocupacaoTurma(const string cadeira, string turma, const vector<studentsClassesClass>& arr){
     int acc=0;
     for (const auto& x:arr){
@@ -192,6 +196,11 @@ int studentsClassesClass::ocupacaoTurma(const string cadeira, string turma, cons
     return acc;
 }
 
+///Remoção de um estudantes de uma cadeira. Complexidade O(n).
+///@param cadeira - string que contém a Uc que queremos abordar.
+///@param nome - string que contém o nome do aluno.
+///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - sem return, apenas dá cout quando o estudante for removido da Uc.
 void studentsClassesClass::removerEstudante(const string nome, const string cadeira, vector<studentsClassesClass>& arr){
     int i=0;
     string turma;
@@ -213,6 +222,11 @@ void studentsClassesClass::removerEstudante(const string nome, const string cade
 
 }
 
+///Adição de um estudantes a uma cadeira. Complexidade O(n).
+///@param cadeira - string que contém a Uc que queremos abordar.
+///@param nome - string que contém o nome do aluno.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - sem return, apenas dá cout quando o estudante for adicionado da Uc.
 void studentsClassesClass::adicionarEstudante(const string nome, const string cadeira, const string turma, vector<studentsClassesClass>& arr){
     int i=0;
     for (const auto& x: arr){
@@ -224,6 +238,10 @@ void studentsClassesClass::adicionarEstudante(const string nome, const string ca
     cout << nome << " has been added to new class " << turma << " for UC " << cadeira << endl;
 }
 
+///Função booleana auxiliar que verificar se, ao adicionar um estudante a uma turma, ela não causa desequilíbrios ou supera a lotação máxima da turma. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param cadeira - string que contém a Uc que queremos abordar.
+///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - falso se desequilibra o número de estudantes por turma, verdadeiro se esse aluno pode ser adicionado.
 bool studentsClassesClass::diferencaDeAlunosTurma(const string cadeira, const vector<studentsClassesClass>& arr){
     set<string> v;
     int maior = INT_MIN;
@@ -243,6 +261,13 @@ bool studentsClassesClass::diferencaDeAlunosTurma(const string cadeira, const ve
     return false;
 }
 
+
+///Função que processa um pedido de alteração do horário. Complexidade O(n).
+///@param nome - string que contém o nome do aluno.
+///@param cadeira - string que contém a Uc que queremos abordar.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param arr2 - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
+///@return - sem return, apenas dá cout se o estudante não conseguiu trocar de turma e a razão.
 void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const std::string cadeira,const std::string novaTurma,vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
     int Cap = 50;
     int n_alunosTurma = ocupacaoTurma(cadeira, novaTurma, arr);
@@ -279,8 +304,12 @@ void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const 
 
 }
 
+
 queue<studentsClassesClass> fila;
 
+///Função que processa vários pedidos de troca de turmas. Complexidade O(n).
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - sem return, apenas vai dando couts enquanto o utilizador pretende trocar de turma.
 void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &arr){
     studentsClassesClass x;
     bool flag = 1;
@@ -297,6 +326,11 @@ void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &
         fila.push(x);
     }
 }
+
+///Função que processa vários pedidos de troca de turmas. Complexidade O(n).
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param arr2 - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
+///return - sem return, apenas vai dá cout se não houve nenhum pedido de troca.
 void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
     if (fila.empty()) cout << "There were schedule change requests today." << endl;
     else {
@@ -307,6 +341,10 @@ void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &ar
     }
 }
 
+///Função que nos dá o número de estudantes por ano. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param ano - ano que queremos analisar.
+///@return - sem return, apenas dá cout ao número de alunos do ano introduzido.
 void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& arr, int ano){
     set<string> v;
     char anoc = '9';
@@ -314,15 +352,18 @@ void studentsClassesClass::ocupacaoUcsAno(const vector<studentsClassesClass>& ar
     if (ano==2) anoc = '2';
     if (ano==3) anoc = '3';
     for (const auto& x: arr){
-        if(x.ClassCode.at(0) == anoc ){
+        if(x.ClassCode.at(0) == anoc){
             v.insert(x.StudentName);
         }}
     int acc=0;
     for (auto x: v) acc++;
     cout << "Number of people attending UCs belonging to year " << ano << ": " << acc << endl;
 }
-///Número de estudantes numa UC x (Ocupação UC)
 
+///Número de estudantes numa UC x (Ocupação UC). Complexidade O(n).
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param cadeira - Uc que queremos analisar.
+///@return - sem return, apenas dá cout ao número de alunos da Uc introduzida.
 void studentsClassesClass::ocupacaoUc(const vector<studentsClassesClass>& arr, string cadeira){
     int sum = 0;
     for (const auto& x: arr){
@@ -334,8 +375,10 @@ void studentsClassesClass::ocupacaoUc(const vector<studentsClassesClass>& arr, s
     cout << "Number of students in UC " << cadeira << ": " << sum << endl;
 }
 
-///Estudantes em determinada turma x
-
+///Estudantes em determinada turma x. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set names.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param turma - Turma que queremos analisar.
+///@return - sem return, apenas dá cout aos alunos da turma introduzida.
 void studentsClassesClass::estudantesTurma(const vector<studentsClassesClass>& arr, string turma){
     string sep = ":";
     set<string> names;
@@ -356,6 +399,11 @@ void studentsClassesClass::estudantesTurma(const vector<studentsClassesClass>& a
         }
         cout << "." << endl;}
 }
+
+///Função que nos dá o número de estudantes por ano. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set setUc.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param ano - ano que queremos analisar.
+///@return - sem return, apenas dá cout aos alunos que têm aulas em cadeiras do ano introduzido.
 void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>& arr, int ano){
     string sep = ":";
     set<string> setUC;
@@ -381,17 +429,16 @@ void studentsClassesClass::estudantesEmUcsAno(const vector<studentsClassesClass>
         cout << "." << endl;
         setUC.clear();
     }
-
-
 }
 
+///Função que nos dá o número de estudantes. Complexidade O(n * log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@return - sem return, apenas dá cout aos alunos da universidade.
 void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& arr){
     string sep = ":";
     set<string> v;
     for (const auto& x: arr){
-
-            v.insert(x.StudentName);
-
+        v.insert(x.StudentName);
     }
     cout << "All the students that are assigned to at least one UC are: ";
     for (auto x: v){
@@ -401,7 +448,10 @@ void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& a
     cout << endl;
 }
 
-///Estudantes em determinada UC x
+///Estudantes em determinada UC. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param cadeira - Uc que queremos analisar.
+///@return - sem return, apenas dá cout aos estudantes pertencentes à Uc introduzida.
 void studentsClassesClass::estudantesUC(const vector<studentsClassesClass>& arr, string cadeira){
     string sep = ":";
     set<string> v;
@@ -427,7 +477,10 @@ void studentsClassesClass::estudantesUC(const vector<studentsClassesClass>& arr,
     }
 }
 
-///turmas de um estudante; complexidade n
+///Turmas de um estudante. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param nome - string que contém o nome do aluno.
+///@return - sem return, apenas dá cout às Ucs do estudante introduzido.
 void studentsClassesClass::turmaAluno(const vector<studentsClassesClass>& arr, string nome){
     string sep = ":";
     set<string> v;
@@ -444,7 +497,10 @@ void studentsClassesClass::turmaAluno(const vector<studentsClassesClass>& arr, s
     cout << endl;
 }
 
-///turmas de cada UC
+///Turmas de cada UC. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param uc - string que contém a Uc.
+///@return -  sem return, apenas cout às turmas associadas à Uc introduzida.
 void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, string uc){
     string sep = ":";
     int sum = 0;
@@ -468,9 +524,10 @@ void studentsClassesClass::turmasUC(const vector<studentsClassesClass>& arr, str
     }
 }
 
-
-
-///Ucs de um estudante; complexidade
+///Ucs de um estudante. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param nome - string que contém o nome do aluno.
+///@return - dá return ao set que contém as Ucs do aluno introduzido na função.
 set<string> studentsClassesClass::UcsAluno(const vector<studentsClassesClass>& arr, string nome){
     string sep = ":";
     set<string> v;
@@ -481,7 +538,11 @@ set<string> studentsClassesClass::UcsAluno(const vector<studentsClassesClass>& a
     }
     return v;
 }
-///complexidade n
+
+///Ucs de um estudante. Complexidade O(n).
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param nome - string que contém o nome do aluno.
+///@return - sem return, dá cout às Ucs do aluno introduzido na função.
 void studentsClassesClass::printUcsAluno(const vector<studentsClassesClass>& arr, string nome){
     string sep = ":";
 
@@ -496,7 +557,11 @@ void studentsClassesClass::printUcsAluno(const vector<studentsClassesClass>& arr
     }
     cout << endl;
 }
-///complexidade n
+
+///Estudantes com mais de n Ucs. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param n - referência do número de Ucs.
+///@return - sem return, apenas dá cout aos alunos com mais de n Ucs.
 void studentsClassesClass::estudantesNUcsAlfabeto(vector<studentsClassesClass> &arr, int n){
     string sep = ":";
     set<string> v;

@@ -13,6 +13,10 @@
 
 using namespace std;
 
+///Função que dá print out para um ou mais ficheiros. Complexidade O(n).
+///@param classesArr - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
+///@param studentsClassesArr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
+///@param classesPerUcArr - vetor que contém as Ucs e as turmas associadas.
 void DarOutput(vector<classesClass>& classesArr, vector<studentsClassesClass>& studentsClassesArr, vector<classesPerUcClass> classesPerUcArr) {
     ofstream output1("new_classes.csv");
     if (output1.is_open()){
@@ -43,7 +47,7 @@ void DarOutput(vector<classesClass>& classesArr, vector<studentsClassesClass>& s
 }
 
 
-
+///Local que contém o menu. Passa os dados dos ficheiros para vetores.
 int main() {
     classesClass classesClass1;
     classesPerUcClass classesPerUcClass1;
@@ -287,8 +291,8 @@ int main() {
 
             }
         }
-        }
     }
+}
 
 
 //studentsClassesClass1.turmasUC(ArrStudentsClasses,"L.EIC012");
