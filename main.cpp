@@ -127,7 +127,7 @@ int main() {
         cout << "Actions related to students (Students in UCs, Classes,...) - [PRESS 1]" << endl;
         cout << "Actions related to UCs (Occupation of UC,Classes Per UC, All UCs,...) - [PRESS 2]" << endl;
         cout << "Actions related to Classes (Occupation of Class,...) - [PRESS 3]" << endl;
-        cout << "Request to Change Schedule - [PRESS 4]" << endl;
+        cout << "Request to add classes to schedule or leave classes - [PRESS 4]" << endl;
         cout << "If the day has come to an end - [PRESS f]" << endl;
         cout << "If you want to exit the menu - [PRESS q]" << endl;
         cout << "==================================================================================" << endl;
@@ -260,11 +260,32 @@ int main() {
                 }
 
             }}
-        else if (stringResposta == "4"){
-            studentsClassesClass::alteraçaoVariasTurmas(ArrStudentsClasses);
+        else if (stringResposta == "4") {
+            while (stringResposta != "e") {
+                cout << "================= What action do you wish to do? =================" << endl;
+                cout << "If you want to remove a student from a class [PRESS 1]" << endl;
+                cout << "If you want to add a student to a class [PRESS 2]" << endl;
+                cout << "If you want to go back - [PRESS e]" << endl;
+                cout << "==================================================================" << endl;
+                cin >> stringResposta;
+                string stringResposta2;
+                if (stringResposta == "1") {
+                    cout << "What is the name of the student || FORMAT:Mafalda" << endl;
+                    cin >> stringResposta2;
+                    cout << "Which UC do you want to choose? || FORMAT:L.EIC001" << endl;
+                    cin >> stringResposta;
+                    studentsClassesClass::removerEstudante(stringResposta2, stringResposta, ArrStudentsClasses);
+                }
+
+                if (stringResposta == "2") {
+                    studentsClassesClass::alteraçaoVariasTurmas(ArrStudentsClasses);
+                }
+
+            }
+        }
         }
     }
-}
+
 
 //studentsClassesClass1.turmasUC(ArrStudentsClasses,"L.EIC012");
 //studentsClassesClass1.estudantesTurma(ArrStudentsClasses, "1LEIC05");
