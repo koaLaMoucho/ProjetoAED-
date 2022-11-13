@@ -329,8 +329,13 @@ queue<studentsClassesClass> fila;
 void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &arr){
     studentsClassesClass x;
     bool flag = 1;
-    cout << "What is the name of the student? || FORMAT: Mafalda + Surname" << endl;
+    cout << "What is the name of the student? || FORMAT: Mafalda" << endl;
     cin >> x.StudentName;
+    string stringSurname;
+    cout << "If the student has a surname type it else dont type the word NOTHING || FORMAT: Placido" << endl;
+    cin >> stringSurname;
+    if (stringSurname!="NOTHING"){
+    x.StudentName = x.StudentName +" "+ stringSurname;}
     while(flag) {
         cout << "What is the UC? || FORMAT: L.EIC001" << endl;
         cin >> x.UcCode;
