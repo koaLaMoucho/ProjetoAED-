@@ -85,7 +85,7 @@ void studentsClassesClass::horarioEstudante(const vector<studentsClassesClass>& 
 ///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
 ///@param arr2 - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
 ///@return - falso se não houver sobreposição no horário original, verdadeiro se houver
-bool studentsClassesClass::verificaSobreposicao(const vector<studentsClassesClass>& arr1, const vector<classesClass>& arr2, string nomeEstudante){
+bool studentsClassesClass::verificaSobreposicao(const vector<studentsClassesClass>& arr1, const vector<classesClass>& arr2, string nomeEstudante) {
     vector<classesClass> v1;
     vector<classesClass> v2;
     vector<classesClass> v3;
@@ -126,37 +126,56 @@ bool studentsClassesClass::verificaSobreposicao(const vector<studentsClassesClas
                 }
 
             }
+            auto x = 12;
         }
 
     }
 
     int i = 0;
-    while(i+1 != v1.size()){
-        if ( v1[i].Type == "TP" &&  v1[i+1].Type == "TP" && (v1[i].StartHour + v1[i].Duration) > v1[i+1].StartHour ) return false; // tem sobreposição
-        else return true; //não tem sobreposição
+    if (!v1.empty()) {
+        while(i + 1 != v1.size()) {
+            if (((v1[i].Type == "TP" && v1[i + 1].Type == "TP") || (v1[i].Type == "PL" && v1[i + 1].Type == "PL" || (v1[i].Type == "PL" && v1[i + 1].Type == "TP") || (v1[i].Type == "TP" && v1[i + 1].Type == "PL"))) && (v1[i].StartHour + v1[i].Duration) > v1[i + 1].StartHour) {
+                return true;
+            }
+            i++;
+        }
+
     }
     i = 0;
-    while(i+1 != v2.size()){
-        if ( v2[i].Type == "TP" &&  v2[i+1].Type == "TP" && (v2[i].StartHour + v2[i].Duration) > v2[i+1].StartHour ) return false;
-        else return true;
-    }
+   if (!v2.empty()  ) {
+       while (i+1 != v2.size()){
+           if (((v2[i].Type == "TP" && v2[i + 1].Type == "TP") || (v2[i].Type == "PL" && v2[i + 1].Type == "PL" || (v2[i].Type == "PL" && v2[i + 1].Type == "TP") || (v2[i].Type == "TP" && v2[i + 1].Type == "PL"))) && (v2[i].StartHour + v2[i].Duration) > v2[i + 1].StartHour) {
+            return true;
+        }
+        i++;
+    }}
     i = 0;
-    while(i+1 != v3.size()){
-        if ( v3[i].Type == "TP" &&  v3[i+1].Type == "TP" && (v3[i].StartHour + v3[i].Duration) > v3[i+1].StartHour ) return false;
-        else return true;
-    }
+    if(!v3.empty()) {
+        while(i + 1 != v3.size()){
+            if (((v3[i].Type == "TP" && v3[i + 1].Type == "TP") || (v3[i].Type == "PL" && v3[i + 1].Type == "PL" || (v3[i].Type == "PL" && v3[i + 1].Type == "TP") || (v3[i].Type == "TP" && v3[i + 1].Type == "PL"))) && (v3[i].StartHour + v3[i].Duration) > v3[i + 1].StartHour){
+            return true;
+        }
+        i++;
+    }}
     i = 0;
-    while(i+1 != v4.size()){
-        if ( v4[i].Type == "TP" &&  v4[i+1].Type == "TP" && (v4[i].StartHour + v4[i].Duration) > v4[i+1].StartHour ) return false;
-        else return true;
-    }
+    if (!v4.empty()){
+    while(i + 1 != v4.size()){
+        if (((v4[i].Type == "TP" && v4[i + 1].Type == "TP") || (v4[i].Type == "PL" && v4[i + 1].Type == "PL" || (v4[i].Type == "PL" && v4[i + 1].Type == "TP") || (v4[i].Type == "TP" && v4[i + 1].Type == "PL"))) && (v4[i].StartHour + v4[i].Duration) > v4[i + 1].StartHour) {
+            return true;
+        }
+        i++;
+
+    }}
     i = 0;
-    while(i+1 != v5.size()){
-        if ( v5[i].Type == "TP" &&  v5[i+1].Type == "TP" && (v5[i].StartHour + v5[i].Duration) > v5[i+1].StartHour ) return false;
-        else return true;
+    if (!v5.empty()) {
+        while (i + 1 != v5.size()) {
+            if (((v5[i].Type == "TP" && v5[i + 1].Type == "TP") || (v5[i].Type == "PL" && v5[i + 1].Type == "PL" || (v5[i].Type == "PL" && v5[i + 1].Type == "TP") || (v5[i].Type == "TP" && v5[i + 1].Type == "PL"))) && (v5[i].StartHour + v5[i].Duration) > v5[i + 1].StartHour) {
+                return true;
+            }
+            i++;
+        }}
+        return false; //se não entrar em algum while verificar.
     }
-    return false; //se não entrar em algum while verificar.
-}
 
 ///Número de estudantes numa turma x (Ocuupação da turma). Complexidade O(n).
 ///@param cadeira - string que contém a Uc que queremos abordar.
@@ -202,20 +221,18 @@ int studentsClassesClass::ocupacaoTurma(const string cadeira, string turma, cons
 ///@param arr1 - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
 ///@return - sem return, apenas dá cout quando o estudante for removido da Uc.
 void studentsClassesClass::removerEstudante(const string nome, const string cadeira, vector<studentsClassesClass>& arr){
-    int i=0;
     string turma;
     int flag = 0;
-    for (const auto& x: arr){
+    for (auto& x: arr){
         if (x.StudentName == nome && x.UcCode == cadeira){
             turma = x.ClassCode;
-            arr[i].ClassCode = "NoClass";
-            i++;
+            x.ClassCode = "NoClass";
             flag = 1;
+            break;
         }
-        i++;
     }
     if (flag == 0) {
-        cout << nome << "is not in that UC so He / She can't change classes." << endl;
+        cout << nome << " is not in that UC so He / She can't change classes." << endl;
         return;
     }
     cout << nome << " no longer has a class in " <<  cadeira <<  endl;
@@ -228,12 +245,11 @@ void studentsClassesClass::removerEstudante(const string nome, const string cade
 ///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
 ///@return - sem return, apenas dá cout quando o estudante for adicionado da Uc.
 void studentsClassesClass::adicionarEstudante(const string nome, const string cadeira, const string turma, vector<studentsClassesClass>& arr){
-    int i=0;
-    for (const auto& x: arr){
+    for (auto& x: arr){
         if (x.StudentName == nome && x.ClassCode == "NoClass" && x.UcCode == cadeira){
-            arr[i].ClassCode = turma;
+            x.ClassCode = turma;
+            break;
         }
-        i++;
     }
     cout << nome << " has been added to new class " << turma << " for UC " << cadeira << endl;
 }
@@ -273,34 +289,34 @@ void studentsClassesClass::pedidoAlteracaoHorario(const std::string nome, const 
     int n_alunosTurma = ocupacaoTurma(cadeira, novaTurma, arr);
 
 
-    if (!verificaSobreposicao(arr,arr2,nome)){
-        cout << "You couldn't change your schedule because you would have 2 TP's at the same time.";
+    if (verificaSobreposicao(arr,arr2,nome)){
+        cout << "You couldn't change your schedule because you would have 2 TP's at the same time." << endl;
         return;
     }
 
     if (diferencaDeAlunosTurma(cadeira, arr) == 0 && n_alunosTurma >= Cap) {
-        cout << "You couldn't change classes because diferencaDeAlunosTurma was too great and n_alunosTurma >= Cap.";
+        cout << "You couldn't change classes because diferencaDeAlunosTurma was too great and n_alunosTurma >= Cap." << endl;
         return;
     }
     if (n_alunosTurma >= Cap) {
-        cout << "You couldn't change classes because n_alunosTurma >= Cap.";
+        cout << "You couldn't change classes because n_alunosTurma >= Cap." << endl;
         return;
     }
     if (diferencaDeAlunosTurma(cadeira, arr) == 0){
-        cout << "You couldn't change classes because diferencaDeAlunosTurma was too great.";
+        cout << "You couldn't change classes because diferencaDeAlunosTurma was too great." << endl;
         return;
     }
 
 
 
-    for (const auto& x : arr){
-        if (x.StudentName == nome && x.UcCode == cadeira && verificaSobreposicao(arr,arr2,nome)) {
+    for ( const auto& x : arr){
+        if (x.StudentName == nome && x.UcCode == cadeira && !verificaSobreposicao(arr,arr2,nome)) {
             removerEstudante(nome,cadeira,arr);
             adicionarEstudante(nome,cadeira,novaTurma,arr);
             return;
         }
     }
-    cout << nome << "is not in that UC so He / She can't change classes or that student doesn't exist." << endl;
+    cout << nome << " is not in that UC so He / She can't change classes or that student doesn't exist." << endl;
 
 }
 
@@ -313,7 +329,7 @@ queue<studentsClassesClass> fila;
 void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &arr){
     studentsClassesClass x;
     bool flag = 1;
-    cout << "What is the name of the student? || FORMAT: Mafalda" << endl;
+    cout << "What is the name of the student? || FORMAT: Mafalda + Surname" << endl;
     cin >> x.StudentName;
     while(flag) {
         cout << "What is the UC? || FORMAT: L.EIC001" << endl;
@@ -332,7 +348,7 @@ void studentsClassesClass::alteraçaoVariasTurmas(vector<studentsClassesClass> &
 ///@param arr2 - vetor que contém o código da turma e da respetiva Uc, como também a hora de começo das aulas, a sua duração e o tipo de aula.
 ///return - sem return, apenas vai dá cout se não houve nenhum pedido de troca.
 void studentsClassesClass:: verificarFinalDoDia(vector<studentsClassesClass> &arr, vector<classesClass> &arr2) {
-    if (fila.empty()) cout << "There were schedule change requests today." << endl;
+    if (fila.empty()) cout << "There were no schedule change requests today." << endl;
     else {
         while (!fila.empty()) {
             pedidoAlteracaoHorario(fila.front().StudentName, fila.front().UcCode, fila.front().ClassCode, arr, arr2);
@@ -448,7 +464,7 @@ void studentsClassesClass::todosEstudantes(const vector<studentsClassesClass>& a
     cout << endl;
 }
 
-///Estudantes em determinada UC. Complexidade O(n + log m): n - comprimento do vetor arr; m - comprimento do set v.
+///Estudantes em determinada UC. Complexidade O(n * (o + p) + log m): n - comprimento do vetor arr; m - comprimento do set v; o - comprimento da string cadeira; p - comprimento da string "0";
 ///@param arr - vetor que contém o código e o nome dos estudantes e as Ucs e respetivas turmas em que estão inscritos.
 ///@param cadeira - Uc que queremos analisar.
 ///@return - sem return, apenas dá cout aos estudantes pertencentes à Uc introduzida.
